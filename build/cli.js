@@ -7,6 +7,7 @@ exports.createPrompts = exports.parseArgs = void 0;
 var _regeneratorRuntime = _interopRequireDefault(require("regenerator-runtime"));
 var _arg = _interopRequireDefault(require("arg"));
 var _inquirer = _interopRequireDefault(require("inquirer"));
+var _generate = require("./generate");
 var _main = require("./main");
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
     try {
@@ -37,10 +38,38 @@ function _asyncToGenerator(fn) {
         });
     };
 }
+function _defineProperty(obj, key, value) {
+    if (key in obj) {
+        Object.defineProperty(obj, key, {
+            value: value,
+            enumerable: true,
+            configurable: true,
+            writable: true
+        });
+    } else {
+        obj[key] = value;
+    }
+    return obj;
+}
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         default: obj
     };
+}
+function _objectSpread(target) {
+    for(var i = 1; i < arguments.length; i++){
+        var source = arguments[i] != null ? arguments[i] : {};
+        var ownKeys = Object.keys(source);
+        if (typeof Object.getOwnPropertySymbols === "function") {
+            ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function(sym) {
+                return Object.getOwnPropertyDescriptor(source, sym).enumerable;
+            }));
+        }
+        ownKeys.forEach(function(key) {
+            _defineProperty(target, key, source[key]);
+        });
+    }
+    return target;
 }
 var prompt = _inquirer.default.createPromptModule();
 var parseArgs = function(rawArgs) {
@@ -60,32 +89,47 @@ var parseArgs = function(rawArgs) {
 exports.parseArgs = parseArgs;
 var createPrompts = function() {
     var _ref = _asyncToGenerator(_regeneratorRuntime.default.mark(function _callee(options) {
-        var defaultLanguage, questions, answers;
+        var questions, languages, answers, projects;
         return _regeneratorRuntime.default.wrap(function _callee$(_ctx) {
             while(1)switch(_ctx.prev = _ctx.next){
                 case 0:
-                    defaultLanguage = "Javascript";
                     questions = [];
+                    languages = (0, _generate).getChoicesFolder().languages;
                     if (!options.isTypescript) {
                         questions.push({
                             type: "list",
                             name: "language",
                             message: "Please choose which language will be used in this project",
-                            choices: [
-                                "Javascript",
-                                "Typescript"
-                            ],
-                            default: defaultLanguage
+                            choices: languages,
+                            default: languages[0]
                         });
                     }
                     _ctx.next = 5;
                     return prompt(questions);
                 case 5:
                     answers = _ctx.sent;
-                    return _ctx.abrupt("return", {
-                        language: options.language || answers.language
+                    questions.length = 0;
+                    projects = (0, _generate).getChoicesFolder("/".concat(answers.language)).projects;
+                    questions.push({
+                        type: "list",
+                        name: "project",
+                        message: "Please choose which project you will use",
+                        choices: projects,
+                        default: projects[0]
                     });
-                case 7:
+                    _ctx.t0 = _objectSpread;
+                    _ctx.t1 = {};
+                    _ctx.t2 = answers;
+                    _ctx.next = 14;
+                    return prompt(questions);
+                case 14:
+                    _ctx.t3 = _ctx.sent;
+                    answers = (0, _ctx.t0)(_ctx.t1, _ctx.t2, _ctx.t3);
+                    return _ctx.abrupt("return", {
+                        language: options.language || answers.language,
+                        project: answers.project
+                    });
+                case 17:
                 case "end":
                     return _ctx.stop();
             }

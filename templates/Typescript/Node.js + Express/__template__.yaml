@@ -1,0 +1,22 @@
+question1: 
+  name: "PROJECT_NAME"
+  default: "node.js-express-template"
+  message: "Please enter your project name"
+
+question2: 
+  name: "PROJECT_DESCRIPTION"
+  default: "A simple node.js + express application"
+  message: "Please enter your project description"
+
+
+question5: 
+  type: "list"
+  name: "PROJECT_DATABASE"
+  message: "Please choose which language will be used in this project"
+  choices: ["[ No Database ]", "MongoDB", "MySQL", "PostgreSQL"]
+  default: "[ No Database ]"
+
+question6: 
+  name: "SERVER_PORT"
+  default: 8080
+  message: "Please configure your server port"

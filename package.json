@@ -1,7 +1,7 @@
 {
   "name": "@bronystylecrazy/create-artty-app",
   "version": "1.0.0",
-  "description": "A simplest way to initialize node.js applications",
+  "description": "A simplest way to initialize artty applications",
   "main": "src/index.js",
   "bin": {
     "@bronystylecrazy/create-artty-app": "bin/create-artty-app",
@@ -12,9 +12,7 @@
   },
   "scripts": {
     "dev": "npx swc src/ -w  -d build",
-    "build": "node -r @swc-node/register src/cli.ts",
-    "generate": "node -r @swc-node/register src/generate.ts",
-    "blueprint": "node -r @swc-node/register src/blueprints/generate.tsx"
+    "build": "node -r @swc-node/register src/cli.ts"
   },
   "repository": {
     "type": "git",
@@ -33,10 +31,12 @@
   "dependencies": {
     "arg": "^5.0.2",
     "chalk": "^4.1.2",
+    "ejs": "^3.1.8",
     "esm": "^3.2.25",
-    "execa": "^6.1.0",
+    "execa": "^5.1.1",
     "glob": "^8.0.3",
     "inquirer": "^8.0.0",
+    "json5": "^2.2.1",
     "listr": "^0.14.3",
     "ncp": "^2.0.0",
     "pkg-install": "^1.0.0",
